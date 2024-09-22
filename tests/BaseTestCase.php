@@ -2,8 +2,8 @@
 
 namespace Sppay\SpPayPhp\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Dotenv\Dotenv;
+use PHPUnit\Framework\TestCase;
 
 abstract class BaseTestCase extends TestCase
 {

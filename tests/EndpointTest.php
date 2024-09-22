@@ -2,9 +2,7 @@
 
 namespace Sppay\SpPayPhp\Tests;
 
-
 use Sppay\SpPayPhp\SpPayPhp;
-use Sppay\SpPayPhp\Tests\BaseTestCase;
 
 class EndpointTest extends BaseTestCase
 {
@@ -46,7 +44,7 @@ class EndpointTest extends BaseTestCase
                 'token_type',
                 'expires_in',
                 'access_token',
-                'refresh_token'
+                'refresh_token',
             ],
             $response
         );
@@ -59,8 +57,8 @@ class EndpointTest extends BaseTestCase
         return $response['access_token'];
     }
 
-    /** 
-     * @depends test_can_authenticate_successfully 
+    /**
+     * @depends test_can_authenticate_successfully
      */
     public function test_can_initiate_payment($accessToken)
     {
@@ -84,7 +82,7 @@ class EndpointTest extends BaseTestCase
                 'status',
                 'message',
                 'object',
-                'transaction'
+                'transaction',
             ],
             $response
         );
@@ -94,8 +92,8 @@ class EndpointTest extends BaseTestCase
         $this->assertEquals('transaction', $response['object']);
     }
 
-    /** 
-     * @depends test_can_authenticate_successfully 
+    /**
+     * @depends test_can_authenticate_successfully
      */
     public function test_can_validate_account($accessToken)
     {
@@ -115,7 +113,7 @@ class EndpointTest extends BaseTestCase
                 'status',
                 'message',
                 'object',
-                'account'
+                'account',
             ],
             $response
         );
@@ -125,8 +123,8 @@ class EndpointTest extends BaseTestCase
         $this->assertEquals('account', $response['object']);
     }
 
-    /** 
-     * @depends test_can_authenticate_successfully 
+    /**
+     * @depends test_can_authenticate_successfully
      */
     // NOTE: Commented out for now. To be commented back in after fix is applied to validate transfer endpoint.
     // public function test_can_validate_transfer($accessToken)
@@ -161,8 +159,8 @@ class EndpointTest extends BaseTestCase
     //     $this->assertEquals('validated_transaction', $response['object']);
     // }
 
-    /** 
-     * @depends test_can_authenticate_successfully 
+    /**
+     * @depends test_can_authenticate_successfully
      */
     public function test_can_submit_transfer($accessToken)
     {
@@ -186,7 +184,7 @@ class EndpointTest extends BaseTestCase
                 'status',
                 'message',
                 'object',
-                'transaction'
+                'transaction',
             ],
             $response
         );
@@ -196,8 +194,8 @@ class EndpointTest extends BaseTestCase
         $this->assertEquals('transaction', $response['object']);
     }
 
-    /** 
-     * @depends test_can_authenticate_successfully 
+    /**
+     * @depends test_can_authenticate_successfully
      */
     public function test_can_send_sms($accessToken)
     {
@@ -206,7 +204,7 @@ class EndpointTest extends BaseTestCase
             approvedSenderID: 'SP Pay',
             recipients: [
                 "233271777557",
-                "233597018036"
+                "233597018036",
             ],
             message: 'Testing SMS from PHP Package'
         );
@@ -221,7 +219,7 @@ class EndpointTest extends BaseTestCase
                 'status',
                 'message',
                 'object',
-                'sms_campaign'
+                'sms_campaign',
             ],
             $response
         );

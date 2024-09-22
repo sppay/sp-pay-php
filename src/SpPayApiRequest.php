@@ -60,7 +60,7 @@ class SpPayApiRequest
                 // Return the response
                 return [
                     'code' => curl_getinfo($ch, CURLINFO_HTTP_CODE),
-                    ...json_decode($response, true)
+                    ...json_decode($response, true),
                 ];
             }
 
