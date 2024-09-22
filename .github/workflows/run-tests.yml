@@ -32,13 +32,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug environment variables
-        run: |
-          echo "TEST_CLIENT_ID: $TEST_CLIENT_ID"
-          echo "TEST_CLIENT_SECRET: $TEST_CLIENT_SECRET"
-          echo "TEST_USERNAME: $TEST_USERNAME"
-          echo "TEST_PASSWORD: $TEST_PASSWORD"
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
