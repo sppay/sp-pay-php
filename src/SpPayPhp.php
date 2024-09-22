@@ -51,10 +51,10 @@ class SpPayPhp
                         'email' => $payeeEmail,
                         'account' => [
                             'code' => $payeeAccountCode,
-                            'number' => $payeeAccountNumber
+                            'number' => $payeeAccountNumber,
                         ],
                     ],
-                    'callback_url' => $callbackUrl
+                    'callback_url' => $callbackUrl,
                 ],
             )
         );
@@ -128,7 +128,7 @@ class SpPayPhp
                     'recipient' => [
                         'account' => [
                             'code' => $recipientAccountCode,
-                            'number' => $recipientAccountNumber
+                            'number' => $recipientAccountNumber,
                         ],
                         'first_name' => $recipientFirstName,
                         'last_name' => $recipientLastName,
@@ -141,7 +141,7 @@ class SpPayPhp
                         'id_reference' => $recipientIdReference,
                     ],
                     'reference' => $customerReference,
-                    'callback_url' => $callbackUrl
+                    'callback_url' => $callbackUrl,
                 ],
             )
         );
@@ -177,7 +177,7 @@ class SpPayPhp
                     'recipient' => [
                         'account' => [
                             'code' => $recipientAccountCode,
-                            'number' => $recipientAccountNumber
+                            'number' => $recipientAccountNumber,
                         ],
                         'first_name' => $recipientFirstName,
                         'last_name' => $recipientLastName,
@@ -190,7 +190,7 @@ class SpPayPhp
                         'id_reference' => $recipientIdReference,
                     ],
                     'reference' => $customerReference,
-                    'callback_url' => $callbackUrl
+                    'callback_url' => $callbackUrl,
                 ],
             )
         );

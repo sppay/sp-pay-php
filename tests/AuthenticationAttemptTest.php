@@ -20,7 +20,7 @@ class AuthenticationAttemptTest extends TestCase
         $this->assertEquals([
             "error" => "invalid_client",
             "error_description" => "Client authentication failed",
-            "message" => "Client authentication failed"
+            "message" => "Client authentication failed",
         ], json_decode($response, true));
     }
 }
