@@ -14,7 +14,7 @@ class AuthenticationAttemptTest extends TestCase
             'testSecret',
             'testUsername',
             'testPassword'
-        )->sendRequest();
+        );
 
         // Assert the response body
         $this->assertEquals([

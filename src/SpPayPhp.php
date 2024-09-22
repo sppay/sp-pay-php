@@ -14,18 +14,20 @@ class SpPayPhp
         $password
     ) {
         return (
-            new SpPayApiRequest(
-                baseUrl: $this->baseUrl,
-                method: 'POST',
-                endpoint: '/oauth/token',
-                body: [
-                    'grant_type' => 'password',
-                    'client_id' => $clientId,
-                    'client_secret' => $clientSecret,
-                    'username' => $username,
-                    'password' => $password,
-                ],
-            )
+            (
+                new SpPayApiRequest(
+                    baseUrl: $this->baseUrl,
+                    method: 'POST',
+                    endpoint: '/oauth/token',
+                    body: [
+                        'grant_type' => 'password',
+                        'client_id' => $clientId,
+                        'client_secret' => $clientSecret,
+                        'username' => $username,
+                        'password' => $password,
+                    ],
+                )
+            )->sendRequest()
         );
     }
 
@@ -39,24 +41,26 @@ class SpPayPhp
         $callbackUrl
     ) {
         return (
-            new SpPayApiRequest(
-                baseUrl: $this->baseUrl,
-                bearerToken: $bearerToken,
-                method: 'POST',
-                endpoint: '/v1/api/payments/initiate',
-                body: [
-                    'receive_account_no' => $recieveAccountNumber,
-                    'amount' => $amount,
-                    'payee' => [
-                        'email' => $payeeEmail,
-                        'account' => [
-                            'code' => $payeeAccountCode,
-                            'number' => $payeeAccountNumber,
+            (
+                new SpPayApiRequest(
+                    baseUrl: $this->baseUrl,
+                    bearerToken: $bearerToken,
+                    method: 'POST',
+                    endpoint: '/v1/api/payments/initiate',
+                    body: [
+                        'receive_account_no' => $recieveAccountNumber,
+                        'amount' => $amount,
+                        'payee' => [
+                            'email' => $payeeEmail,
+                            'account' => [
+                                'code' => $payeeAccountCode,
+                                'number' => $payeeAccountNumber,
+                            ],
                         ],
+                        'callback_url' => $callbackUrl,
                     ],
-                    'callback_url' => $callbackUrl,
-                ],
-            )
+                )
+            )->sendRequest()
         );
     }
 
@@ -66,16 +70,18 @@ class SpPayPhp
         $transactionReference
     ) {
         return (
-            new SpPayApiRequest(
-                baseUrl: $this->baseUrl,
-                bearerToken: $bearerToken,
-                method: 'POST',
-                endpoint: '/v1/api/payments/otp/submit',
-                body: [
-                    'otp' => $otp,
-                    'transaction_reference' => $transactionReference,
-                ],
-            )
+            (
+                new SpPayApiRequest(
+                    baseUrl: $this->baseUrl,
+                    bearerToken: $bearerToken,
+                    method: 'POST',
+                    endpoint: '/v1/api/payments/otp/submit',
+                    body: [
+                        'otp' => $otp,
+                        'transaction_reference' => $transactionReference,
+                    ],
+                )
+            )->sendRequest()
         );
     }
 
@@ -85,16 +91,18 @@ class SpPayPhp
         $accountNumber
     ) {
         return (
-            new SpPayApiRequest(
-                baseUrl: $this->baseUrl,
-                bearerToken: $bearerToken,
-                method: 'POST',
-                endpoint: '/v1/api/transfers/validate-account',
-                body: [
-                    'institution_code' => $institutionCode,
-                    'account_number' => $accountNumber,
-                ],
-            )
+            (
+                new SpPayApiRequest(
+                    baseUrl: $this->baseUrl,
+                    bearerToken: $bearerToken,
+                    method: 'POST',
+                    endpoint: '/v1/api/transfers/validate-account',
+                    body: [
+                        'institution_code' => $institutionCode,
+                        'account_number' => $accountNumber,
+                    ],
+                )
+            )->sendRequest()
         );
     }
 
@@ -117,33 +125,35 @@ class SpPayPhp
         $recipientIdReference = null,
     ) {
         return (
-            new SpPayApiRequest(
-                baseUrl: $this->baseUrl,
-                bearerToken: $bearerToken,
-                method: 'POST',
-                endpoint: '/v1/api/transfers/validate',
-                body: [
-                    'send_account_no' => $sendAccountNumber,
-                    'amount' => $amount,
-                    'recipient' => [
-                        'account' => [
-                            'code' => $recipientAccountCode,
-                            'number' => $recipientAccountNumber,
+            (
+                new SpPayApiRequest(
+                    baseUrl: $this->baseUrl,
+                    bearerToken: $bearerToken,
+                    method: 'POST',
+                    endpoint: '/v1/api/transfers/validate',
+                    body: [
+                        'send_account_no' => $sendAccountNumber,
+                        'amount' => $amount,
+                        'recipient' => [
+                            'account' => [
+                                'code' => $recipientAccountCode,
+                                'number' => $recipientAccountNumber,
+                            ],
+                            'first_name' => $recipientFirstName,
+                            'last_name' => $recipientLastName,
+                            'town_or_city' => $recipientTownOrCity,
+                            'address' => $recipientAddress,
+                            'reason_for_sending' => $senderReasonForSending,
+                            'country_code' => $recipientCountryCode,
+                            'state_or_region_code' => $recipientStateOrRegionCode,
+                            'id_type' => $recipientIdType,
+                            'id_reference' => $recipientIdReference,
                         ],
-                        'first_name' => $recipientFirstName,
-                        'last_name' => $recipientLastName,
-                        'town_or_city' => $recipientTownOrCity,
-                        'address' => $recipientAddress,
-                        'reason_for_sending' => $senderReasonForSending,
-                        'country_code' => $recipientCountryCode,
-                        'state_or_region_code' => $recipientStateOrRegionCode,
-                        'id_type' => $recipientIdType,
-                        'id_reference' => $recipientIdReference,
+                        'reference' => $customerReference,
+                        'callback_url' => $callbackUrl,
                     ],
-                    'reference' => $customerReference,
-                    'callback_url' => $callbackUrl,
-                ],
-            )
+                )
+            )->sendRequest()
         );
     }
 
@@ -166,33 +176,35 @@ class SpPayPhp
         $recipientIdReference = null,
     ) {
         return (
-            new SpPayApiRequest(
-                baseUrl: $this->baseUrl,
-                bearerToken: $bearerToken,
-                method: 'POST',
-                endpoint: '/v1/api/transfers/submit',
-                body: [
-                    'send_account_no' => $sendAccountNumber,
-                    'amount' => $amount,
-                    'recipient' => [
-                        'account' => [
-                            'code' => $recipientAccountCode,
-                            'number' => $recipientAccountNumber,
+            (
+                new SpPayApiRequest(
+                    baseUrl: $this->baseUrl,
+                    bearerToken: $bearerToken,
+                    method: 'POST',
+                    endpoint: '/v1/api/transfers/submit',
+                    body: [
+                        'send_account_no' => $sendAccountNumber,
+                        'amount' => $amount,
+                        'recipient' => [
+                            'account' => [
+                                'code' => $recipientAccountCode,
+                                'number' => $recipientAccountNumber,
+                            ],
+                            'first_name' => $recipientFirstName,
+                            'last_name' => $recipientLastName,
+                            'town_or_city' => $recipientTownOrCity,
+                            'address' => $recipientAddress,
+                            'reason_for_sending' => $senderReasonForSending,
+                            'country_code' => $recipientCountryCode,
+                            'state_or_region_code' => $recipientStateOrRegionCode,
+                            'id_type' => $recipientIdType,
+                            'id_reference' => $recipientIdReference,
                         ],
-                        'first_name' => $recipientFirstName,
-                        'last_name' => $recipientLastName,
-                        'town_or_city' => $recipientTownOrCity,
-                        'address' => $recipientAddress,
-                        'reason_for_sending' => $senderReasonForSending,
-                        'country_code' => $recipientCountryCode,
-                        'state_or_region_code' => $recipientStateOrRegionCode,
-                        'id_type' => $recipientIdType,
-                        'id_reference' => $recipientIdReference,
+                        'reference' => $customerReference,
+                        'callback_url' => $callbackUrl,
                     ],
-                    'reference' => $customerReference,
-                    'callback_url' => $callbackUrl,
-                ],
-            )
+                )
+            )->sendRequest()
         );
     }
 
@@ -203,17 +215,19 @@ class SpPayPhp
         $message
     ) {
         return (
-            new SpPayApiRequest(
-                baseUrl: $this->baseUrl,
-                bearerToken: $bearerToken,
-                method: 'POST',
-                endpoint: '/v1/api/sms/send',
-                body: [
-                    'from' => $approvedSenderID,
-                    'to' => $recipients,
-                    'message' => $message,
-                ],
-            )
+            (
+                new SpPayApiRequest(
+                    baseUrl: $this->baseUrl,
+                    bearerToken: $bearerToken,
+                    method: 'POST',
+                    endpoint: '/v1/api/sms/send',
+                    body: [
+                        'from' => $approvedSenderID,
+                        'to' => $recipients,
+                        'message' => $message,
+                    ],
+                )
+            )->sendRequest()
         );
     }
 }
