@@ -6,15 +6,15 @@ class SpPayApiRequest
 {
     protected $baseUrl;
     protected $method;
-    protected $endppoint;
+    protected $endpoint;
     protected $body;
     protected $bearerToken;
 
-    public function __construct($baseUrl, $method = 'POST', $endppoint, $body = [], $bearerToken = null)
+    public function __construct($baseUrl, $method = 'POST', $endpoint, $body = [], $bearerToken = null)
     {
         $this->baseUrl = $baseUrl;
         $this->method = $method;
-        $this->endppoint = $endppoint;
+        $this->endpoint = $endpoint;
         $this->body = $body;
         $this->bearerToken = $bearerToken;
     }
@@ -23,7 +23,7 @@ class SpPayApiRequest
     {
         try {
             // Initialize cURL
-            $ch = curl_init($this->baseUrl . $this->endppoint);
+            $ch = curl_init($this->baseUrl . $this->endpoint);
 
             // Set cURL options
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string

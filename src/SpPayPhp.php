@@ -17,7 +17,7 @@ class SpPayPhp
             new SpPayApiRequest(
                 baseUrl: $this->baseUrl,
                 method: 'POST',
-                endppoint: '/oauth/token',
+                endpoint: '/oauth/token',
                 body: [
                     'grant_type' => 'password',
                     'client_id' => $clientId,
@@ -43,7 +43,7 @@ class SpPayPhp
                 baseUrl: $this->baseUrl,
                 bearerToken: $bearerToken,
                 method: 'POST',
-                endppoint: '/v1/api/payments/initiate',
+                endpoint: '/v1/api/payments/initiate',
                 body: [
                     'receive_account_no' => $recieveAccountNumber,
                     'amount' => $amount,
@@ -70,7 +70,7 @@ class SpPayPhp
                 baseUrl: $this->baseUrl,
                 bearerToken: $bearerToken,
                 method: 'POST',
-                endppoint: '/v1/api/payments/otp/submit',
+                endpoint: '/v1/api/payments/otp/submit',
                 body: [
                     'otp' => $otp,
                     'transaction_reference' => $transactionReference,
@@ -89,7 +89,7 @@ class SpPayPhp
                 baseUrl: $this->baseUrl,
                 bearerToken: $bearerToken,
                 method: 'POST',
-                endppoint: '/v1/api/transfers/validate-account',
+                endpoint: '/v1/api/transfers/validate-account',
                 body: [
                     'institution_code' => $institutionCode,
                     'account_number' => $accountNumber,
@@ -121,7 +121,7 @@ class SpPayPhp
                 baseUrl: $this->baseUrl,
                 bearerToken: $bearerToken,
                 method: 'POST',
-                endppoint: '/v1/api/transfers/validate',
+                endpoint: '/v1/api/transfers/validate',
                 body: [
                     'send_account_no' => $sendAccountNumber,
                     'amount' => $amount,
@@ -170,7 +170,7 @@ class SpPayPhp
                 baseUrl: $this->baseUrl,
                 bearerToken: $bearerToken,
                 method: 'POST',
-                endppoint: '/v1/api/transfers/submit',
+                endpoint: '/v1/api/transfers/submit',
                 body: [
                     'send_account_no' => $sendAccountNumber,
                     'amount' => $amount,
@@ -207,7 +207,7 @@ class SpPayPhp
                 baseUrl: $this->baseUrl,
                 bearerToken: $bearerToken,
                 method: 'POST',
-                endppoint: '/v1/api/sms/send',
+                endpoint: '/v1/api/sms/send',
                 body: [
                     'from' => $approvedSenderID,
                     'to' => $recipients,
