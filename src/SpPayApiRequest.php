@@ -2,4 +2,6 @@
 
 namespace Sppay\SpPayPhp;
 
-class SpPayPhpClass {}
+class SpPayApiRequest {
+    
+}

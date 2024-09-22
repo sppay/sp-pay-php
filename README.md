@@ -4,7 +4,7 @@
 [![Tests](https://img.shields.io/github/actions/workflow/status/sppay/sp-pay-php/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/sppay/sp-pay-php/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/sppay/sp-pay-php.svg?style=flat-square)](https://packagist.org/packages/sppay/sp-pay-php)
 
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
+This is a lightweight PHP package that makes it possible to interact with the SP Pay API with a line of code.
 
 ## Installation
 
@@ -17,8 +17,11 @@ composer require sppay/sp-pay-php
 ## Usage
 
 ```php
-$spPay = new Sppay\SpPayPhp();
-echo $spPay->getTransaction('transactionReferenceGoesHere');
+$validatedAccount = (new Sppay\SpPayPhp())->validateAccount(
+    bearerToken: 'bearer_token_from_authentication'
+    institutionCode: 'SPP',
+    accountNumber: '1000'
+);
 ```
 
 ## Testing
@@ -31,18 +34,14 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
-
 ## Security Vulnerabilities
 
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 
-- [Michael Ekow Selby](https://github.com/ms-sppay)
-- [All Contributors](../../contributors)
+-   [Michael Ekow Selby](https://github.com/ms-sppay)
+-   [All Contributors](../../contributors)
 
 ## License
 
