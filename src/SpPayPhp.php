@@ -9,7 +9,8 @@ class SpPayPhp
         $clientSecret,
         $username,
         $password
-    ) {}
+    ) {
+    }
 
     public function initiatePayment(
         $bearerToken,
@@ -19,19 +20,22 @@ class SpPayPhp
         $payeeAccountCode,
         $payeeAccountNumber,
         $callbackUrl
-    ) {}
+    ) {
+    }
 
     public function submitOTP(
         $bearerToken,
         $otp,
         $transactionReference
-    ) {}
+    ) {
+    }
 
     public function validateAccount(
         $bearerToken,
         $institutionCode,
         $accountNumber
-    ) {}
+    ) {
+    }
 
     public function validateTransfer(
         $bearerToken,
@@ -50,7 +54,8 @@ class SpPayPhp
         $recipientIdType = null,
         $recipientIdReference = null,
         $callbackUrl
-    ) {}
+    ) {
+    }
 
     public function submitTransfer(
         $bearerToken,
@@ -69,12 +74,14 @@ class SpPayPhp
         $recipientIdType = null,
         $recipientIdReference = null,
         $callbackUrl
-    ) {}
+    ) {
+    }
 
     public function sendSMS(
         $bearerToken,
         $approvedSenderID,
         $recipients,
         $message
-    ) {}
+    ) {
+    }
 }
