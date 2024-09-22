@@ -28,10 +28,10 @@ class EndpointTest extends BaseTestCase
     {
 
         $response = (new SpPayPhp())->generateAPIToken(
-            clientId: $_ENV['TEST_CLIENT_ID'],
-            clientSecret: $_ENV['TEST_CLIENT_SECRET'],
-            username: $_ENV['TEST_USERNAME'],
-            password: $_ENV['TEST_PASSWORD']
+            clientId: $_SERVER['TEST_CLIENT_ID'],
+            clientSecret: $_SERVER['TEST_CLIENT_SECRET'],
+            username: $_SERVER['TEST_USERNAME'],
+            password: $_SERVER['TEST_PASSWORD']
         );
 
         // Assert response code.
