@@ -10,7 +10,7 @@ class SpPayApiRequest
     protected $body;
     protected $bearerToken;
 
-    public function __construct($baseUrl, $endpoint, $method = 'POST',  $body = [], $bearerToken = null)
+    public function __construct($baseUrl, $endpoint, $method = 'POST', $body = [], $bearerToken = null)
     {
         $this->baseUrl = $baseUrl;
         $this->method = $method;
@@ -58,7 +58,10 @@ class SpPayApiRequest
                 return 'API Request Error: ' . curl_error($ch);
             } else {
                 // Return the response
-                return json_decode($response, true);
+                return [
+                    'code' => curl_getinfo($ch, CURLINFO_HTTP_CODE),
+                    ...json_decode($response, true)
+                ];
             }
 
             // Close the cURL session

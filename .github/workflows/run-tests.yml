@@ -22,6 +22,12 @@ jobs:
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
+    env: 
+      TEST_CLIENT_ID: ${{ secrets.TEST_CLIENT_ID }}
+      TEST_CLIENT_SECRET: ${{ secrets.TEST_CLIENT_SECRET }}
+      TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+      TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
