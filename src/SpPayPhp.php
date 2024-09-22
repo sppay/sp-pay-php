@@ -99,13 +99,14 @@ class SpPayPhp
     }
 
     public function validateTransfer(
+        $callbackUrl,
         $bearerToken,
         $customerReference,
         $sendAccountNumber,
         $amount,
-        $senderReasonForSending = null,
         $recipientAccountCode,
         $recipientAccountNumber,
+        $senderReasonForSending = null,
         $recipientFirstName = null,
         $recipientLastName = null,
         $recipientTownOrCity = null,
@@ -114,7 +115,6 @@ class SpPayPhp
         $recipientStateOrRegionCode = null,
         $recipientIdType = null,
         $recipientIdReference = null,
-        $callbackUrl
     ) {
         return (
             new SpPayApiRequest(
@@ -148,13 +148,14 @@ class SpPayPhp
     }
 
     public function submitTransfer(
+        $callbackUrl,
         $bearerToken,
         $customerReference,
         $sendAccountNumber,
         $amount,
-        $senderReasonForSending = null,
         $recipientAccountCode,
         $recipientAccountNumber,
+        $senderReasonForSending = null,
         $recipientFirstName = null,
         $recipientLastName = null,
         $recipientTownOrCity = null,
@@ -163,7 +164,6 @@ class SpPayPhp
         $recipientStateOrRegionCode = null,
         $recipientIdType = null,
         $recipientIdReference = null,
-        $callbackUrl
     ) {
         return (
             new SpPayApiRequest(

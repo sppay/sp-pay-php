@@ -10,7 +10,7 @@ class SpPayApiRequest
     protected $body;
     protected $bearerToken;
 
-    public function __construct($baseUrl, $method = 'POST', $endpoint, $body = [], $bearerToken = null)
+    public function __construct($baseUrl, $endpoint, $method = 'POST',  $body = [], $bearerToken = null)
     {
         $this->baseUrl = $baseUrl;
         $this->method = $method;
@@ -27,10 +27,6 @@ class SpPayApiRequest
 
             // Set cURL options
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Authorization: Bearer $this->bearerToken", // Set the authorization header
-                "Content-Type: application/json", // Optional: Set the content type if needed
-            ]);
 
             // Initialize headers array
             $headers = [];
@@ -62,7 +58,8 @@ class SpPayApiRequest
                 return 'API Request Error: ' . curl_error($ch);
             } else {
                 // Return the response
-                return json_decode($response, true);
+                // return json_decode($response, true);
+                return $response;
             }
 
             // Close the cURL session
