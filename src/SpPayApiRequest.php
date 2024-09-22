@@ -58,8 +58,7 @@ class SpPayApiRequest
                 return 'API Request Error: ' . curl_error($ch);
             } else {
                 // Return the response
-                // return json_decode($response, true);
-                return $response;
+                return json_decode($response, true);
             }
 
             // Close the cURL session
