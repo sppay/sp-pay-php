@@ -22,7 +22,7 @@ jobs:
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
-    env: 
+    env:
       TEST_CLIENT_ID: ${{ secrets.TEST_CLIENT_ID }}
       TEST_CLIENT_SECRET: ${{ secrets.TEST_CLIENT_SECRET }}
       TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
@@ -31,6 +31,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Debug environment variables
+        run: |
+          echo "TEST_CLIENT_ID: $TEST_CLIENT_ID"
+          echo "TEST_CLIENT_SECRET: $TEST_CLIENT_SECRET"
+          echo "TEST_USERNAME: $TEST_USERNAME"
+          echo "TEST_PASSWORD: $TEST_PASSWORD"
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
