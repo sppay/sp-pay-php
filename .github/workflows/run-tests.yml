@@ -45,4 +45,7 @@ jobs:
         run: composer show -D
 
       - name: Execute tests
-        run: XDEBUG_MODE=coverage vendor/bin/phpunit
+        shell: ${{ matrix.os == 'windows-latest' && 'pwsh' || 'bash' }}
+        run: |
+          ${{ matrix.os == 'windows-latest' && '$env:XDEBUG_MODE="coverage"' || 'XDEBUG_MODE=coverage' }}
+          vendor/bin/phpunit
