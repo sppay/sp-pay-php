@@ -149,7 +149,7 @@ class EndpointTest extends BaseTestCase
                 'status',
                 'message',
                 'object',
-                'transaction'
+                'transaction',
             ],
             $response
         );
