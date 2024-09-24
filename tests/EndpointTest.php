@@ -66,9 +66,9 @@ class EndpointTest extends BaseTestCase
             bearerToken: $accessToken,
             recieveAccountNumber: '1000',
             amount: 2,
-            payeeEmail: 'michaelselbygh@gmail.com',
-            payeeAccountCode: 'SPP',
-            payeeAccountNumber: '1000',
+            payerEmail: 'michaelselbygh@gmail.com',
+            payerAccountCode: 'SPP',
+            payerAccountNumber: '1000',
             callbackUrl: 'https://callback.test.com'
         );
 
@@ -127,37 +127,37 @@ class EndpointTest extends BaseTestCase
      * @depends test_can_authenticate_successfully
      */
     // NOTE: Commented out for now. To be commented back in after fix is applied to validate transfer endpoint.
-    // public function test_can_validate_transfer($accessToken)
-    // {
-    //     $response = (new SpPayPhp())->validateTransfer(
-    //         bearerToken: $accessToken,
-    //         customerReference: 'Test Via Package',
-    //         sendAccountNumber: '1000',
-    //         amount: 2,
-    //         recipientAccountCode: 'SPP',
-    //         recipientAccountNumber: '1001',
-    //         callbackUrl: 'https://callback.test.com'
-    //     );
+    public function test_can_validate_transfer($accessToken)
+    {
+        $response = (new SpPayPhp())->validateTransfer(
+            bearerToken: $accessToken,
+            customerReference: 'Test Via Package',
+            sendAccountNumber: '1000',
+            amount: 2,
+            recipientAccountCode: 'SPP',
+            recipientAccountNumber: '1001',
+            callbackUrl: 'https://callback.test.com'
+        );
 
-    //     // Assert response code.
-    //     $this->assertEquals(200, $response['code']);
+        // Assert response code.
+        $this->assertEquals(200, $response['code']);
 
-    //     // Assert response structure.
-    //     $this->assertJsonStructure(
-    //         [
-    //             'code',
-    //             'status',
-    //             'message',
-    //             'object',
-    //             'validated_transaction'
-    //         ],
-    //         $response
-    //     );
+        // Assert response structure.
+        $this->assertJsonStructure(
+            [
+                'code',
+                'status',
+                'message',
+                'object',
+                'transaction'
+            ],
+            $response
+        );
 
-    //     // Assert certain response values.
-    //     $this->assertEquals('success', $response['status']);
-    //     $this->assertEquals('validated_transaction', $response['object']);
-    // }
+        // Assert certain response values.
+        $this->assertEquals('success', $response['status']);
+        $this->assertEquals('transaction', $response['object']);
+    }
 
     /**
      * @depends test_can_authenticate_successfully

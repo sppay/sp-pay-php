@@ -35,9 +35,9 @@ class SpPayPhp
         $bearerToken,
         $recieveAccountNumber,
         $amount,
-        $payeeEmail,
-        $payeeAccountCode,
-        $payeeAccountNumber,
+        $payerEmail,
+        $payerAccountCode,
+        $payerAccountNumber,
         $callbackUrl
     ) {
         return (
@@ -50,11 +50,11 @@ class SpPayPhp
                     body: [
                         'receive_account_no' => $recieveAccountNumber,
                         'amount' => $amount,
-                        'payee' => [
-                            'email' => $payeeEmail,
+                        'payer' => [
+                            'email' => $payerEmail,
                             'account' => [
-                                'code' => $payeeAccountCode,
-                                'number' => $payeeAccountNumber,
+                                'code' => $payerAccountCode,
+                                'number' => $payerAccountNumber,
                             ],
                         ],
                         'callback_url' => $callbackUrl,
