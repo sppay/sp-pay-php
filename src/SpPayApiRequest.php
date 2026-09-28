@@ -57,10 +57,26 @@ class SpPayApiRequest
             if (curl_errno($ch)) {
                 return 'API Request Error: ' . curl_error($ch);
             } else {
+                $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                $decoded = json_decode($response, true);
+
+                // Anything in front of the API, such as a proxy or a firewall
+                // challenge, can answer with HTML. Say so rather than failing
+                // to unpack it.
+                if (! is_array($decoded)) {
+                    return [
+                        'code' => $code,
+                        'error' => 'invalid_response',
+                        'message' => 'The API returned a response that is not JSON',
+                        'content_type' => curl_getinfo($ch, CURLINFO_CONTENT_TYPE),
+                        'body' => substr((string) $response, 0, 500),
+                    ];
+                }
+
                 // Return the response
                 return [
-                    'code' => curl_getinfo($ch, CURLINFO_HTTP_CODE),
-                    ...json_decode($response, true),
+                    'code' => $code,
+                    ...$decoded,
                 ];
             }
 
