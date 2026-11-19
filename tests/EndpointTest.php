@@ -2,13 +2,14 @@
 
 namespace Sppay\SpPayPhp\Tests;
 
+use Sppay\SpPayPhp\Environment;
 use Sppay\SpPayPhp\SpPayPhp;
 
 class EndpointTest extends BaseTestCase
 {
     public function test_can_attempt_athentication()
     {
-        $response = (new SpPayPhp())->generateAPIToken(
+        $response = (new SpPayPhp(environment: Environment::Staging))->generateAPIToken(
             'testId',
             'testSecret',
             'testUsername',
@@ -27,7 +28,7 @@ class EndpointTest extends BaseTestCase
     public function test_can_authenticate_successfully()
     {
 
-        $response = (new SpPayPhp())->generateAPIToken(
+        $response = (new SpPayPhp(environment: Environment::Staging))->generateAPIToken(
             clientId: $_SERVER['TEST_CLIENT_ID'],
             clientSecret: $_SERVER['TEST_CLIENT_SECRET'],
             username: $_SERVER['TEST_USERNAME'],
@@ -62,9 +63,9 @@ class EndpointTest extends BaseTestCase
      */
     public function test_can_initiate_payment($accessToken)
     {
-        $response = (new SpPayPhp())->initiatePayment(
+        $response = (new SpPayPhp(environment: Environment::Staging))->initiatePayment(
             bearerToken: $accessToken,
-            recieveAccountNumber: '1000',
+            receiveAccountNumber: '1000',
             amount: 2,
             payerEmail: 'michaelselbygh@gmail.com',
             payerAccountCode: 'SPP',
@@ -97,7 +98,7 @@ class EndpointTest extends BaseTestCase
      */
     public function test_can_validate_account($accessToken)
     {
-        $response = (new SpPayPhp())->validateAccount(
+        $response = (new SpPayPhp(environment: Environment::Staging))->validateAccount(
             bearerToken: $accessToken,
             institutionCode: 'SPP',
             accountNumber: '1000'
@@ -129,14 +130,13 @@ class EndpointTest extends BaseTestCase
     // NOTE: Commented out for now. To be commented back in after fix is applied to validate transfer endpoint.
     public function test_can_validate_transfer($accessToken)
     {
-        $response = (new SpPayPhp())->validateTransfer(
+        $response = (new SpPayPhp(environment: Environment::Staging))->validateTransfer(
             bearerToken: $accessToken,
             customerReference: 'Test Via Package',
             sendAccountNumber: '1000',
             amount: 2,
             recipientAccountCode: 'SPP',
-            recipientAccountNumber: '1001',
-            callbackUrl: 'https://callback.test.com'
+            recipientAccountNumber: '1001'
         );
 
         // Assert response code.
@@ -164,7 +164,7 @@ class EndpointTest extends BaseTestCase
      */
     public function test_can_submit_transfer($accessToken)
     {
-        $response = (new SpPayPhp())->submitTransfer(
+        $response = (new SpPayPhp(environment: Environment::Staging))->submitTransfer(
             bearerToken: $accessToken,
             customerReference: 'Test Via Package',
             sendAccountNumber: '1000',
@@ -199,7 +199,7 @@ class EndpointTest extends BaseTestCase
      */
     public function test_can_send_sms($accessToken)
     {
-        $response = (new SpPayPhp())->sendSMS(
+        $response = (new SpPayPhp(environment: Environment::Staging))->sendSMS(
             bearerToken: $accessToken,
             approvedSenderID: 'SP Pay',
             recipients: [

@@ -17,11 +17,43 @@ composer require sppay/sp-pay-php
 ## Usage
 
 ```php
-$validatedAccount = (new Sppay\SpPayPhp())->validateAccount(
-    bearerToken: 'bearer_token_from_authentication'
-    institutionCode: 'SPP',
-    accountNumber: '1000'
+use Sppay\SpPayPhp\SpPayPhp;
+
+$sppay = new SpPayPhp();
+
+$auth = $sppay->generateAPIToken(
+    clientId: getenv('SPPAY_CLIENT_ID'),
+    clientSecret: getenv('SPPAY_CLIENT_SECRET'),
+    username: getenv('SPPAY_USERNAME'),
+    password: getenv('SPPAY_PASSWORD'),
 );
+
+$account = $sppay->validateAccount(
+    bearerToken: $auth['access_token'],
+    institutionCode: 'MTN',
+    accountNumber: '0241234567',
+);
+
+if ($account['code'] === 200) {
+    echo $account['account']['name_on_account'];
+}
+```
+
+The client calls production. To use staging, pass `environment: Environment::Staging`:
+
+```php
+use Sppay\SpPayPhp\Environment;
+use Sppay\SpPayPhp\SpPayPhp;
+
+$sppay = new SpPayPhp(environment: Environment::Staging);
+```
+
+Each method returns an array. `code` is the HTTP status, and the other keys are the response from the API. When the request cannot be sent or the response is not JSON, `code` is `0` or the HTTP status, and `error` is `request_failed`, `invalid_request` or `invalid_response`.
+
+Requests time out after 60 seconds. To change it, pass `timeout` in seconds:
+
+```php
+$sppay = new SpPayPhp(timeout: 30);
 ```
 
 ## Testing
