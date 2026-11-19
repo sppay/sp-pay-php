@@ -74,7 +74,7 @@ class EndpointTest extends BaseTestCase
     {
         $response = (new SpPayPhp(environment: 'staging'))->initiatePayment(
             bearer_token: $access_token,
-            recieve_account_number: '1000',
+            receive_account_number: '1000',
             amount: 2,
             payer_email: 'michaelselbygh@gmail.com',
             payer_account_code: 'SPP',
@@ -136,12 +136,11 @@ class EndpointTest extends BaseTestCase
     {
         $response = (new SpPayPhp(environment: 'staging'))->validateTransfer(
             bearer_token: $access_token,
-            customer_reference: 'Test Via Package',
+            merchant_reference: 'Test Via Package',
             send_account_number: '1000',
             amount: 2,
             recipient_account_code: 'SPP',
-            recipient_account_number: '1001',
-            callback_url: 'https://callback.test.com'
+            recipient_account_number: '1001'
         );
 
         // Assert response code.
@@ -169,7 +168,7 @@ class EndpointTest extends BaseTestCase
     {
         $response = (new SpPayPhp(environment: 'staging'))->submitTransfer(
             bearer_token: $access_token,
-            customer_reference: 'Test Via Package',
+            merchant_reference: 'Test Via Package',
             send_account_number: '1000',
             amount: 2,
             recipient_account_code: 'SPP',

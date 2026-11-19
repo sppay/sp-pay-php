@@ -87,4 +87,50 @@ class SpPayPhpTest extends TestCase
         $this->assertSame(0, $response['http_status']);
         $this->assertSame('INVALID_REQUEST', $response['code']);
     }
+
+    public function test_initiate_payment_sends_the_optional_fields_that_are_set()
+    {
+        $response = (new SpPayPhp(base_url: self::$host))->initiatePayment(
+            bearer_token: 'token',
+            amount: 25,
+            payer_email: 'ama@example.com',
+            payer_account_code: 'VISA',
+            payer_account_number: '4111111111111111',
+            merchant_reference: 'INV-1',
+            payer_account_cvv: '123',
+            payer_account_expiry: '12/30',
+        );
+
+        $this->assertSame([
+            'amount' => 25,
+            'payer' => [
+                'email' => 'ama@example.com',
+                'account' => ['code' => 'VISA', 'number' => '4111111111111111', 'cvv' => '123', 'expiry' => '12/30'],
+            ],
+            'reference' => 'INV-1',
+        ], $response['echo']['body']);
+    }
+
+    public function test_submit_transfer_sends_the_reason_under_recipient()
+    {
+        $response = (new SpPayPhp(base_url: self::$host))->submitTransfer(
+            bearer_token: 'token',
+            send_account_number: '100103',
+            amount: 10,
+            recipient_account_code: 'MTN',
+            recipient_account_number: '0241234567',
+            recipient_reason_for_sending: 'Family support',
+            callback_url: 'https://example.com/callback',
+        );
+
+        $this->assertSame([
+            'send_account_no' => '100103',
+            'amount' => 10,
+            'recipient' => [
+                'account' => ['code' => 'MTN', 'number' => '0241234567'],
+                'reason_for_sending' => 'Family support',
+            ],
+            'callback_url' => 'https://example.com/callback',
+        ], $response['echo']['body']);
+    }
 }
