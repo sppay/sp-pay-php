@@ -45,8 +45,20 @@ class SpPayPhpTest extends TestCase
     {
         $response = (new SpPayPhp(environment: 'staging', base_url: self::$host))->validateAccount('token', 'MTN', '0241234567');
 
-        $this->assertSame(200, $response['code']);
+        $this->assertSame(200, $response['http_status']);
         $this->assertSame('/v1/api/transfers/validate-account', $response['echo']['path']);
         $this->assertSame('Bearer token', $response['echo']['authorization']);
+    }
+
+    public function test_the_body_is_returned_unchanged_with_the_http_status()
+    {
+        $response = (new SpPayPhp(base_url: self::$host . '/maintenance'))->validateAccount('token', 'MTN', '0241234567');
+
+        $this->assertSame([
+            'http_status' => 503,
+            'status' => 'error',
+            'message' => 'SPPay is undergoing maintenance.',
+            'code' => 'MAINTENANCE',
+        ], $response);
     }
 }

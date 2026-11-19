@@ -29,7 +29,7 @@ class EndpointTest extends BaseTestCase
 
         // Assert the response body
         $this->assertEquals([
-            "code" => 401,
+            "http_status" => 401,
             "error" => "invalid_client",
             "error_description" => "Client authentication failed",
             "message" => "Client authentication failed",
@@ -47,12 +47,12 @@ class EndpointTest extends BaseTestCase
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'token_type',
                 'expires_in',
                 'access_token',
@@ -83,12 +83,12 @@ class EndpointTest extends BaseTestCase
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -112,12 +112,12 @@ class EndpointTest extends BaseTestCase
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -145,12 +145,12 @@ class EndpointTest extends BaseTestCase
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -178,12 +178,12 @@ class EndpointTest extends BaseTestCase
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -211,12 +211,12 @@ class EndpointTest extends BaseTestCase
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
