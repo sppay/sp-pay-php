@@ -11,6 +11,10 @@ if ($path === '/maintenance/v1/api/transfers/validate-account') {
     return;
 }
 
+if (str_starts_with($path, '/slow/')) {
+    sleep(3);
+}
+
 echo json_encode([
     'status' => 'success',
     'object' => 'echo',

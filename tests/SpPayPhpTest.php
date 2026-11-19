@@ -70,4 +70,13 @@ class SpPayPhpTest extends TestCase
         $this->assertSame('error', $response['status']);
         $this->assertSame('REQUEST_FAILED', $response['code']);
     }
+
+    public function test_a_slow_response_times_out()
+    {
+        $started = microtime(true);
+        $response = (new SpPayPhp(base_url: self::$host . '/slow', timeout: 1))->validateAccount('token', 'MTN', '0241234567');
+
+        $this->assertSame('REQUEST_FAILED', $response['code']);
+        $this->assertLessThan(2.5, microtime(true) - $started);
+    }
 }
