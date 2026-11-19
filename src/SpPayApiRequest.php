@@ -4,26 +4,26 @@ namespace Sppay\SpPayPhp;
 
 class SpPayApiRequest
 {
-    protected $baseUrl;
+    protected $base_url;
     protected $method;
     protected $endpoint;
     protected $body;
-    protected $bearerToken;
+    protected $bearer_token;
 
-    public function __construct($baseUrl, $endpoint, $method = 'POST', $body = [], $bearerToken = null)
+    public function __construct($base_url, $endpoint, $method = 'POST', $body = [], $bearer_token = null)
     {
-        $this->baseUrl = $baseUrl;
+        $this->base_url = $base_url;
         $this->method = $method;
         $this->endpoint = $endpoint;
         $this->body = $body;
-        $this->bearerToken = $bearerToken;
+        $this->bearer_token = $bearer_token;
     }
 
     public function sendRequest()
     {
         try {
             // Initialize cURL
-            $ch = curl_init($this->baseUrl . $this->endpoint);
+            $ch = curl_init($this->base_url . $this->endpoint);
 
             // Set cURL options
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
@@ -32,8 +32,8 @@ class SpPayApiRequest
             $headers = [];
 
             // Optionally set the Authorization header if the bearer token is provided
-            if ($this->bearerToken) {
-                $headers[] = "Authorization: Bearer $this->bearerToken"; // Set the authorization header
+            if ($this->bearer_token) {
+                $headers[] = "Authorization: Bearer $this->bearer_token"; // Set the authorization header
             }
 
             // Set Content-Type header.
