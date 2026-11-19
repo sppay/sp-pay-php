@@ -16,6 +16,7 @@ class SpPayPhp
     public function __construct(
         string $environment = 'production',
         ?string $base_url = null,
+        private int $timeout = 60,
     ) {
         if (! isset(self::HOSTS[$environment])) {
             throw new InvalidArgumentException("Unknown environment \"$environment\". Use \"production\" or \"staging\".");
@@ -34,6 +35,7 @@ class SpPayPhp
             (
                 new SpPayApiRequest(
                     base_url: $this->base_url,
+                    timeout: $this->timeout,
                     method: 'POST',
                     endpoint: '/oauth/token',
                     body: [
@@ -61,6 +63,7 @@ class SpPayPhp
             (
                 new SpPayApiRequest(
                     base_url: $this->base_url,
+                    timeout: $this->timeout,
                     bearer_token: $bearer_token,
                     method: 'POST',
                     endpoint: '/v1/api/payments/initiate',
@@ -90,6 +93,7 @@ class SpPayPhp
             (
                 new SpPayApiRequest(
                     base_url: $this->base_url,
+                    timeout: $this->timeout,
                     bearer_token: $bearer_token,
                     method: 'POST',
                     endpoint: '/v1/api/payments/otp/submit',
@@ -111,6 +115,7 @@ class SpPayPhp
             (
                 new SpPayApiRequest(
                     base_url: $this->base_url,
+                    timeout: $this->timeout,
                     bearer_token: $bearer_token,
                     method: 'POST',
                     endpoint: '/v1/api/transfers/validate-account',
@@ -145,6 +150,7 @@ class SpPayPhp
             (
                 new SpPayApiRequest(
                     base_url: $this->base_url,
+                    timeout: $this->timeout,
                     bearer_token: $bearer_token,
                     method: 'POST',
                     endpoint: '/v1/api/transfers/validate',
@@ -196,6 +202,7 @@ class SpPayPhp
             (
                 new SpPayApiRequest(
                     base_url: $this->base_url,
+                    timeout: $this->timeout,
                     bearer_token: $bearer_token,
                     method: 'POST',
                     endpoint: '/v1/api/transfers/submit',
@@ -235,6 +242,7 @@ class SpPayPhp
             (
                 new SpPayApiRequest(
                     base_url: $this->base_url,
+                    timeout: $this->timeout,
                     bearer_token: $bearer_token,
                     method: 'POST',
                     endpoint: '/v1/api/sms/send',
