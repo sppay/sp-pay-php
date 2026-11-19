@@ -79,4 +79,12 @@ class SpPayPhpTest extends TestCase
         $this->assertSame('REQUEST_FAILED', $response['code']);
         $this->assertLessThan(2.5, microtime(true) - $started);
     }
+
+    public function test_a_body_that_is_not_utf8_is_not_sent()
+    {
+        $response = (new SpPayPhp(base_url: 'http://127.0.0.1:1'))->sendSMS('token', 'MYSHOP', ['0241234567'], "Caf\xE9");
+
+        $this->assertSame(0, $response['http_status']);
+        $this->assertSame('INVALID_REQUEST', $response['code']);
+    }
 }

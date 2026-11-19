@@ -2,6 +2,8 @@
 
 namespace Sppay\SpPayPhp;
 
+use JsonException;
+
 class SpPayApiRequest
 {
     public function __construct(
@@ -16,6 +18,12 @@ class SpPayApiRequest
 
     public function sendRequest(): array
     {
+        try {
+            $payload = json_encode($this->body, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            return self::error(0, 'INVALID_REQUEST', $e->getMessage());
+        }
+
         $headers = ['Content-Type: application/json'];
         if ($this->bearer_token) {
             $headers[] = "Authorization: Bearer $this->bearer_token";
@@ -31,7 +39,7 @@ class SpPayApiRequest
 
         if (strtoupper($this->method) === 'POST') {
             curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->body));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         } else {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper($this->method));
         }
