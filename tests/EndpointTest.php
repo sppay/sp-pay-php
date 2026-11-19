@@ -2,10 +2,22 @@
 
 namespace Sppay\SpPayPhp\Tests;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use Sppay\SpPayPhp\SpPayPhp;
 
+#[Group('staging')]
 class EndpointTest extends BaseTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (empty($_SERVER['TEST_CLIENT_ID'])) {
+            $this->markTestSkipped('Set TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_USERNAME and TEST_PASSWORD to run the staging tests.');
+        }
+    }
+
     public function test_can_attempt_athentication()
     {
         $response = (new SpPayPhp())->generateAPIToken(
@@ -57,9 +69,7 @@ class EndpointTest extends BaseTestCase
         return $response['access_token'];
     }
 
-    /**
-     * @depends test_can_authenticate_successfully
-     */
+    #[Depends('test_can_authenticate_successfully')]
     public function test_can_initiate_payment($accessToken)
     {
         $response = (new SpPayPhp())->initiatePayment(
@@ -92,9 +102,7 @@ class EndpointTest extends BaseTestCase
         $this->assertEquals('transaction', $response['object']);
     }
 
-    /**
-     * @depends test_can_authenticate_successfully
-     */
+    #[Depends('test_can_authenticate_successfully')]
     public function test_can_validate_account($accessToken)
     {
         $response = (new SpPayPhp())->validateAccount(
@@ -123,10 +131,7 @@ class EndpointTest extends BaseTestCase
         $this->assertEquals('account', $response['object']);
     }
 
-    /**
-     * @depends test_can_authenticate_successfully
-     */
-    // NOTE: Commented out for now. To be commented back in after fix is applied to validate transfer endpoint.
+    #[Depends('test_can_authenticate_successfully')]
     public function test_can_validate_transfer($accessToken)
     {
         $response = (new SpPayPhp())->validateTransfer(
@@ -159,9 +164,7 @@ class EndpointTest extends BaseTestCase
         $this->assertEquals('transaction', $response['object']);
     }
 
-    /**
-     * @depends test_can_authenticate_successfully
-     */
+    #[Depends('test_can_authenticate_successfully')]
     public function test_can_submit_transfer($accessToken)
     {
         $response = (new SpPayPhp())->submitTransfer(
@@ -194,9 +197,7 @@ class EndpointTest extends BaseTestCase
         $this->assertEquals('transaction', $response['object']);
     }
 
-    /**
-     * @depends test_can_authenticate_successfully
-     */
+    #[Depends('test_can_authenticate_successfully')]
     public function test_can_send_sms($accessToken)
     {
         $response = (new SpPayPhp())->sendSMS(
