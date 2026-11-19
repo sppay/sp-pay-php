@@ -2,10 +2,27 @@
 
 namespace Sppay\SpPayPhp;
 
+use InvalidArgumentException;
+
 class SpPayPhp
 {
-    // TODO: To be updated when systems go live.
-    private $base_url = 'https://engine.sppay.dev';
+    private const HOSTS = [
+        'production' => 'https://engine.sppaygh.com',
+        'staging' => 'https://engine.sppay.dev',
+    ];
+
+    private string $base_url;
+
+    public function __construct(
+        string $environment = 'production',
+        ?string $base_url = null,
+    ) {
+        if (! isset(self::HOSTS[$environment])) {
+            throw new InvalidArgumentException("Unknown environment \"$environment\". Use \"production\" or \"staging\".");
+        }
+
+        $this->base_url = $base_url ?? self::HOSTS[$environment];
+    }
 
     public function generateAPIToken(
         $client_id,
