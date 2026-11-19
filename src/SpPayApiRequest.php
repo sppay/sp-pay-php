@@ -65,9 +65,10 @@ class SpPayApiRequest
                 // to unpack it.
                 if (! is_array($decoded)) {
                     return [
-                        'code' => $code,
-                        'error' => 'invalid_response',
+                        'http_status' => $code,
+                        'status' => 'error',
                         'message' => 'The API returned a response that is not JSON',
+                        'code' => 'INVALID_RESPONSE',
                         'content_type' => curl_getinfo($ch, CURLINFO_CONTENT_TYPE),
                         'body' => substr((string) $response, 0, 500),
                     ];
@@ -75,7 +76,7 @@ class SpPayApiRequest
 
                 // Return the response
                 return [
-                    'code' => $code,
+                    'http_status' => $code,
                     ...$decoded,
                 ];
             }
