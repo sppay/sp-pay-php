@@ -10,6 +10,7 @@ class SpPayApiRequest
         private string $method = 'POST',
         private array $body = [],
         private ?string $bearer_token = null,
+        private int $timeout = 60,
     ) {
     }
 
@@ -24,6 +25,8 @@ class SpPayApiRequest
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_TIMEOUT => $this->timeout,
         ]);
 
         if (strtoupper($this->method) === 'POST') {
