@@ -20,7 +20,7 @@ class EndpointTest extends BaseTestCase
 
     public function test_can_attempt_athentication()
     {
-        $response = (new SpPayPhp())->generateAPIToken(
+        $response = (new SpPayPhp(environment: 'staging'))->generateAPIToken(
             'testId',
             'testSecret',
             'testUsername',
@@ -39,7 +39,7 @@ class EndpointTest extends BaseTestCase
     public function test_can_authenticate_successfully()
     {
 
-        $response = (new SpPayPhp())->generateAPIToken(
+        $response = (new SpPayPhp(environment: 'staging'))->generateAPIToken(
             client_id: $_SERVER['TEST_CLIENT_ID'],
             client_secret: $_SERVER['TEST_CLIENT_SECRET'],
             username: $_SERVER['TEST_USERNAME'],
@@ -72,7 +72,7 @@ class EndpointTest extends BaseTestCase
     #[Depends('test_can_authenticate_successfully')]
     public function test_can_initiate_payment($access_token)
     {
-        $response = (new SpPayPhp())->initiatePayment(
+        $response = (new SpPayPhp(environment: 'staging'))->initiatePayment(
             bearer_token: $access_token,
             recieve_account_number: '1000',
             amount: 2,
@@ -105,7 +105,7 @@ class EndpointTest extends BaseTestCase
     #[Depends('test_can_authenticate_successfully')]
     public function test_can_validate_account($access_token)
     {
-        $response = (new SpPayPhp())->validateAccount(
+        $response = (new SpPayPhp(environment: 'staging'))->validateAccount(
             bearer_token: $access_token,
             institution_code: 'SPP',
             account_number: '1000'
@@ -134,7 +134,7 @@ class EndpointTest extends BaseTestCase
     #[Depends('test_can_authenticate_successfully')]
     public function test_can_validate_transfer($access_token)
     {
-        $response = (new SpPayPhp())->validateTransfer(
+        $response = (new SpPayPhp(environment: 'staging'))->validateTransfer(
             bearer_token: $access_token,
             customer_reference: 'Test Via Package',
             send_account_number: '1000',
@@ -167,7 +167,7 @@ class EndpointTest extends BaseTestCase
     #[Depends('test_can_authenticate_successfully')]
     public function test_can_submit_transfer($access_token)
     {
-        $response = (new SpPayPhp())->submitTransfer(
+        $response = (new SpPayPhp(environment: 'staging'))->submitTransfer(
             bearer_token: $access_token,
             customer_reference: 'Test Via Package',
             send_account_number: '1000',
@@ -200,7 +200,7 @@ class EndpointTest extends BaseTestCase
     #[Depends('test_can_authenticate_successfully')]
     public function test_can_send_sms($access_token)
     {
-        $response = (new SpPayPhp())->sendSMS(
+        $response = (new SpPayPhp(environment: 'staging'))->sendSMS(
             bearer_token: $access_token,
             approved_sender_id: 'SP Pay',
             recipients: [
