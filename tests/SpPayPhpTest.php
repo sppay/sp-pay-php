@@ -61,4 +61,13 @@ class SpPayPhpTest extends TestCase
             'code' => 'MAINTENANCE',
         ], $response);
     }
+
+    public function test_a_request_that_cannot_be_sent_returns_an_error()
+    {
+        $response = (new SpPayPhp(base_url: 'http://127.0.0.1:1'))->validateAccount('token', 'MTN', '0241234567');
+
+        $this->assertSame(0, $response['http_status']);
+        $this->assertSame('error', $response['status']);
+        $this->assertSame('REQUEST_FAILED', $response['code']);
+    }
 }
