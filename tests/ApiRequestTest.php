@@ -13,8 +13,8 @@ class ApiRequestTest extends BaseTestCase
         $response = (new SpPayApiRequest('https://example.com', '/', 'GET'))->sendRequest();
 
         $this->assertIsArray($response);
-        $this->assertEquals('invalid_response', $response['error']);
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals('INVALID_RESPONSE', $response['code']);
+        $this->assertEquals(200, $response['http_status']);
         $this->assertStringContainsString('text/html', $response['content_type']);
         $this->assertStringContainsStringIgnoringCase('<html', $response['body']);
     }

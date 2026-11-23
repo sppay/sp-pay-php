@@ -20,7 +20,7 @@ class EndpointTest extends BaseTestCase
 
     public function test_can_attempt_athentication()
     {
-        $response = (new SpPayPhp())->generateAPIToken(
+        $response = (new SpPayPhp(environment: 'staging'))->generateAPIToken(
             'testId',
             'testSecret',
             'testUsername',
@@ -29,7 +29,7 @@ class EndpointTest extends BaseTestCase
 
         // Assert the response body
         $this->assertEquals([
-            "code" => 401,
+            "http_status" => 401,
             "error" => "invalid_client",
             "error_description" => "Client authentication failed",
             "message" => "Client authentication failed",
@@ -39,20 +39,20 @@ class EndpointTest extends BaseTestCase
     public function test_can_authenticate_successfully()
     {
 
-        $response = (new SpPayPhp())->generateAPIToken(
-            clientId: $_SERVER['TEST_CLIENT_ID'],
-            clientSecret: $_SERVER['TEST_CLIENT_SECRET'],
+        $response = (new SpPayPhp(environment: 'staging'))->generateAPIToken(
+            client_id: $_SERVER['TEST_CLIENT_ID'],
+            client_secret: $_SERVER['TEST_CLIENT_SECRET'],
             username: $_SERVER['TEST_USERNAME'],
             password: $_SERVER['TEST_PASSWORD']
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'token_type',
                 'expires_in',
                 'access_token',
@@ -70,25 +70,25 @@ class EndpointTest extends BaseTestCase
     }
 
     #[Depends('test_can_authenticate_successfully')]
-    public function test_can_initiate_payment($accessToken)
+    public function test_can_initiate_payment($access_token)
     {
-        $response = (new SpPayPhp())->initiatePayment(
-            bearerToken: $accessToken,
-            recieveAccountNumber: '1000',
+        $response = (new SpPayPhp(environment: 'staging'))->initiatePayment(
+            bearer_token: $access_token,
+            receive_account_number: '1000',
             amount: 2,
-            payerEmail: 'michaelselbygh@gmail.com',
-            payerAccountCode: 'SPP',
-            payerAccountNumber: '1000',
-            callbackUrl: 'https://callback.test.com'
+            payer_email: 'michaelselbygh@gmail.com',
+            payer_account_code: 'SPP',
+            payer_account_number: '1000',
+            callback_url: 'https://callback.test.com'
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -103,21 +103,21 @@ class EndpointTest extends BaseTestCase
     }
 
     #[Depends('test_can_authenticate_successfully')]
-    public function test_can_validate_account($accessToken)
+    public function test_can_validate_account($access_token)
     {
-        $response = (new SpPayPhp())->validateAccount(
-            bearerToken: $accessToken,
-            institutionCode: 'SPP',
-            accountNumber: '1000'
+        $response = (new SpPayPhp(environment: 'staging'))->validateAccount(
+            bearer_token: $access_token,
+            institution_code: 'SPP',
+            account_number: '1000'
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -132,25 +132,24 @@ class EndpointTest extends BaseTestCase
     }
 
     #[Depends('test_can_authenticate_successfully')]
-    public function test_can_validate_transfer($accessToken)
+    public function test_can_validate_transfer($access_token)
     {
-        $response = (new SpPayPhp())->validateTransfer(
-            bearerToken: $accessToken,
-            customerReference: 'Test Via Package',
-            sendAccountNumber: '1000',
+        $response = (new SpPayPhp(environment: 'staging'))->validateTransfer(
+            bearer_token: $access_token,
+            merchant_reference: 'Test Via Package',
+            send_account_number: '1000',
             amount: 2,
-            recipientAccountCode: 'SPP',
-            recipientAccountNumber: '1001',
-            callbackUrl: 'https://callback.test.com'
+            recipient_account_code: 'SPP',
+            recipient_account_number: '1001'
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -165,25 +164,25 @@ class EndpointTest extends BaseTestCase
     }
 
     #[Depends('test_can_authenticate_successfully')]
-    public function test_can_submit_transfer($accessToken)
+    public function test_can_submit_transfer($access_token)
     {
-        $response = (new SpPayPhp())->submitTransfer(
-            bearerToken: $accessToken,
-            customerReference: 'Test Via Package',
-            sendAccountNumber: '1000',
+        $response = (new SpPayPhp(environment: 'staging'))->submitTransfer(
+            bearer_token: $access_token,
+            merchant_reference: 'Test Via Package',
+            send_account_number: '1000',
             amount: 2,
-            recipientAccountCode: 'SPP',
-            recipientAccountNumber: '1001',
-            callbackUrl: 'https://callback.test.com'
+            recipient_account_code: 'SPP',
+            recipient_account_number: '1001',
+            callback_url: 'https://callback.test.com'
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -198,11 +197,11 @@ class EndpointTest extends BaseTestCase
     }
 
     #[Depends('test_can_authenticate_successfully')]
-    public function test_can_send_sms($accessToken)
+    public function test_can_send_sms($access_token)
     {
-        $response = (new SpPayPhp())->sendSMS(
-            bearerToken: $accessToken,
-            approvedSenderID: 'SP Pay',
+        $response = (new SpPayPhp(environment: 'staging'))->sendSMS(
+            bearer_token: $access_token,
+            approved_sender_id: 'SP Pay',
             recipients: [
                 "233271777557",
                 "233597018036",
@@ -211,12 +210,12 @@ class EndpointTest extends BaseTestCase
         );
 
         // Assert response code.
-        $this->assertEquals(200, $response['code']);
+        $this->assertEquals(200, $response['http_status']);
 
         // Assert response structure.
         $this->assertJsonStructure(
             [
-                'code',
+                'http_status',
                 'status',
                 'message',
                 'object',
@@ -231,15 +230,15 @@ class EndpointTest extends BaseTestCase
     }
 
     /** Helper function for asserting JSON Structures. */
-    protected function assertJsonStructure(array $expectedStructure, array $responseArray)
+    protected function assertJsonStructure(array $expected_structure, array $response_array)
     {
-        foreach ($expectedStructure as $key => $value) {
+        foreach ($expected_structure as $key => $value) {
             if (is_array($value)) {
                 // Recursively check nested structure
-                $this->assertArrayHasKey($key, $responseArray);
-                $this->assertJsonStructure($value, $responseArray[$key]);
+                $this->assertArrayHasKey($key, $response_array);
+                $this->assertJsonStructure($value, $response_array[$key]);
             } else {
-                $this->assertArrayHasKey($value, $responseArray);
+                $this->assertArrayHasKey($value, $response_array);
             }
         }
     }
